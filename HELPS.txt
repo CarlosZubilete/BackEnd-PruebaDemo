@@ -1,0 +1,39 @@
+Step 0: 
+☑️ Crear la base de datos SQL
+☑️ Crear el proyecto Web-Api .NET (destildar el 'HPPTS')
+
+
+
+Step 1: Instalar los Paquetes Necesarios
+
+☑️ Microsoft.EntityFrameworkCore.Tools (8.0.4)
+☑️ Microsoft.EntityFrameworkCore.SqlServer (8.0.4)
+
+if you need:
+
+☑️ Microsoft.EntityFrameworkCore 
+☑️ Swashbuckle.AspNetCore
+☑️ Swashbuckle.AspNetCore.Swagger
+
+
+Step 2: Ejecutar el comando en la consola del Administrador de Paquetes: 
+	-> Tools -> Nuget packet manager -> packet manager console.
+
+Scaffold-DbContext "Data Source=DESKTOP-LFTFVP5\SQLEXPRESS;Initial Catalog=pruebademo;Integrated Security=True;TrustServerCertificate=true" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+
+
+	-> Linea de comando que especifica la cadena de conexion 
+	
+	Scaffold-DbContext "cadena_de_conexion" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+
+	->
+	"Data Source=name_server;Database=name_database;
+	Trusted_Connection=True;
+	TrustServerCertificate=True;" 
+	
+	-> Especifica la carpeta donde EF generará las clases de entidad
+	-OutputDir Models -Force (Fuerza la sobreescritura de los archivos generados.)
+
+	->  -Force (Fuerza la sobreescritura de los archivos generados.)
+		Si ya existen clases en el directorio con el mismo nombre, sin -Force te va a dar error y no las va a regenerar.
+		Es útil cuando hiciste un cambio en la base de datos y necesitás actualizar las clases sin tener que borrar los archivos a mano.
