@@ -31,7 +31,6 @@ namespace WebApi_PruebaDemo.Controllers
     }
 
 
-
     // GET api/<ClientesController>/5
     [HttpGet]
     [Route("cliente/{id:int}")]

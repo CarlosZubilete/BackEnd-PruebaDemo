@@ -7,7 +7,7 @@ public partial class Producto
 {
   public int Id { get; set; }
 
-  public string Nombre { get; set; } = null!;
+  public string Nombre { get; set; } = null!; // Null is not allower.
 
   public double? Precio { get; set; }
 

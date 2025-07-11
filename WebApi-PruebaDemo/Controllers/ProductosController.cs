@@ -20,19 +20,26 @@ namespace WebApi_PruebaDemo.Controllers
 
     // GET: api/<ProductosController>
     [HttpGet]
-    [Route("productos")]
+    [Route("lista")]
     public async Task<IActionResult> Get()
     {
-      var listaProductos = await _dbContext.Productos.ToListAsync();
-      return StatusCode(StatusCodes.Status200OK, listaProductos);
+      //var lista = await _dbContext.Productos.ToListAsync();
+      var lista = await _dbContext.Productos
+                        .Where(p => !p.Eliminado)
+                        .ToListAsync();
+      return StatusCode(StatusCodes.Status200OK, lista);
     }
 
-    // GET api/<ProductosController>/5
+    // GET api/<ProductosController>/
     [HttpGet]
-    [Route("productos/{id:int}")]
+    [Route("producto/{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
-      var producto = await _dbContext.Productos.FirstOrDefaultAsync(producto => producto.Id == id);
+      var producto = await _dbContext.Productos
+                           .FirstOrDefaultAsync(p => p.Id == id && !p.Eliminado);
+
+      if (producto == null) return StatusCode(StatusCodes.Status404NotFound, new { mensage = "Producto not found" });
+
       return StatusCode(StatusCodes.Status200OK, producto);
     }
 
@@ -46,7 +53,8 @@ namespace WebApi_PruebaDemo.Controllers
       return StatusCode(StatusCodes.Status200OK, new { mensage = "OK" });
     }
 
-    // PUT api/<ProductosController>/5
+    // PUT api/<ProductosController>/
+    /*
     [HttpPut]
     [Route("editar")]
     public async Task<IActionResult> Update([FromBody] Producto producto)
@@ -55,14 +63,38 @@ namespace WebApi_PruebaDemo.Controllers
       await _dbContext.SaveChangesAsync();
       return StatusCode(StatusCodes.Status200OK, new { mensage = "OK" });
     }
+    */
+    // PATCH api/<ProductosController>/
+    [HttpPatch("editar/{id:int}")]
+    public async Task<IActionResult> Update(int id, [FromBody] Producto producto)
+    {
+      var existingProducto = await _dbContext.Productos
+                                  .FirstOrDefaultAsync(p => p.Id == id && !p.Eliminado);
 
-    // DELETE api/<ProductosController>/5
+      if (existingProducto == null) return StatusCode(StatusCodes.Status404NotFound, new { mensage = "Producto not found" });
+      // Update only the fields that are provided
+      existingProducto.Nombre = producto.Nombre ?? existingProducto.Nombre;
+      existingProducto.Precio = producto.Precio ?? existingProducto.Precio;
+      existingProducto.Categoria = producto.Categoria ?? existingProducto.Categoria;
+
+      _dbContext.Productos.Update(existingProducto);
+      await _dbContext.SaveChangesAsync();
+      return StatusCode(StatusCodes.Status200OK, new { mensage = "OK" });
+    }
+
+    // DELETE api/<ProductosController>/
     [HttpDelete]
     [Route("eliminar/{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-      var producto = await _dbContext.Productos.FirstOrDefaultAsync(producto => producto.Id == id);
-      _dbContext.Productos.Remove(producto);
+      var producto = await _dbContext.Productos
+                           .FirstOrDefaultAsync(p => p.Id == id && !p.Eliminado);
+
+      if (producto == null) return StatusCode(StatusCodes.Status404NotFound, new { mensage = "Producto not found" });
+
+      // Soft delete
+      producto.Eliminado = true;
+      // _dbContext.Productos.Remove(producto);
       await _dbContext.SaveChangesAsync();
       return StatusCode(StatusCodes.Status200OK, producto);
     }
