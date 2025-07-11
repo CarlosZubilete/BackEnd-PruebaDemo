@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using WebApi_PruebaDemo.Models; // include the file Models.
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Services; // Include the library.
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,7 +14,6 @@ namespace WebApi_PruebaDemo.Controllers
   public class ClientesController : ControllerBase
   {
     private readonly PruebademoContext _dbContext;
-    private int id;
 
     public ClientesController (PruebademoContext dbContext)// Declarated construcot:
     {
