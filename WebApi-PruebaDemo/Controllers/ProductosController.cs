@@ -20,7 +20,7 @@ namespace WebApi_PruebaDemo.Controllers
 
     // GET: api/<ProductosController>
     [HttpGet]
-    [Route("ListaProductos")]
+    [Route("productos")]
     public async Task<IActionResult> Get()
     {
       var listaProductos = await _dbContext.Productos.ToListAsync();
@@ -29,7 +29,7 @@ namespace WebApi_PruebaDemo.Controllers
 
     // GET api/<ProductosController>/5
     [HttpGet]
-    [Route("ListaProductos/{id:int}")]
+    [Route("productos/{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
       var producto = await _dbContext.Productos.FirstOrDefaultAsync(producto => producto.Id == id);
@@ -38,7 +38,7 @@ namespace WebApi_PruebaDemo.Controllers
 
     // POST api/<ProductosController>
     [HttpPost]
-    [Route("NuevoProducto")]
+    [Route("nuevo")]
     public async Task<IActionResult> NewProducto([FromBody] Producto producto)
     {
       await _dbContext.Productos.AddAsync(producto);
@@ -48,7 +48,7 @@ namespace WebApi_PruebaDemo.Controllers
 
     // PUT api/<ProductosController>/5
     [HttpPut]
-    [Route("Editar")]
+    [Route("editar")]
     public async Task<IActionResult> Update([FromBody] Producto producto)
     {
       _dbContext.Productos.Update(producto);
@@ -58,7 +58,7 @@ namespace WebApi_PruebaDemo.Controllers
 
     // DELETE api/<ProductosController>/5
     [HttpDelete]
-    [Route("Eliminar/{id:int}")]
+    [Route("eliminar/{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
       var producto = await _dbContext.Productos.FirstOrDefaultAsync(producto => producto.Id == id);

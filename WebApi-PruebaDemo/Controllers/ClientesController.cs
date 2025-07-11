@@ -23,7 +23,7 @@ namespace WebApi_PruebaDemo.Controllers
     
     // GET: api/<ClientesController>
     [HttpGet]
-    [Route("LitaClientes")]
+    [Route("clientes")]
     public async Task<IActionResult> Get()
     {
       var listaClientes = await _dbContext.Clientes.ToListAsync();
@@ -34,7 +34,7 @@ namespace WebApi_PruebaDemo.Controllers
 
     // GET api/<ClientesController>/5
     [HttpGet]
-    [Route("LitaClientes/{id:int}")]
+    [Route("cliente/{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
       var cliente = await _dbContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
@@ -44,7 +44,7 @@ namespace WebApi_PruebaDemo.Controllers
 
     // POST api/<ClientesController>
     [HttpPost]
-    [Route("nuevoCliente")]
+    [Route("nuevo")]
     public async Task<IActionResult> NewCliente([FromBody] Cliente cliente)
     {
       await _dbContext.Clientes.AddAsync(cliente);
