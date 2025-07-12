@@ -12,7 +12,6 @@ namespace WebApi_PruebaDemo.Controllers
   public class ProductosController : ControllerBase
   {
     private readonly PruebademoContext _dbContext;
-
     public ProductosController(PruebademoContext dbContext)
     {
       _dbContext = dbContext;
@@ -64,20 +63,26 @@ namespace WebApi_PruebaDemo.Controllers
       return StatusCode(StatusCodes.Status200OK, new { mensage = "OK" });
     }
     */
+
     // PATCH api/<ProductosController>/
     [HttpPatch("editar/{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Producto producto)
+    public async Task<IActionResult> Update(int id, [FromBody] ProductoPatchDTO producto)
     {
       var existingProducto = await _dbContext.Productos
                                   .FirstOrDefaultAsync(p => p.Id == id && !p.Eliminado);
 
       if (existingProducto == null) return StatusCode(StatusCodes.Status404NotFound, new { mensage = "Producto not found" });
       // Update only the fields that are provided
-      existingProducto.Nombre = producto.Nombre ?? existingProducto.Nombre;
-      existingProducto.Precio = producto.Precio ?? existingProducto.Precio;
-      existingProducto.Categoria = producto.Categoria ?? existingProducto.Categoria;
+      if (producto.Nombre != null)
+        existingProducto.Nombre = producto.Nombre;
 
-      _dbContext.Productos.Update(existingProducto);
+      if (producto.Precio.HasValue)
+        existingProducto.Precio = producto.Precio.Value;
+
+      if (producto.Categoria != null)
+        existingProducto.Categoria = producto.Categoria;
+
+      // _dbContext.Productos.Update(existingProducto);
       await _dbContext.SaveChangesAsync();
       return StatusCode(StatusCodes.Status200OK, new { mensage = "OK" });
     }

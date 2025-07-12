@@ -14,5 +14,6 @@ public partial class Producto
   public string? Categoria { get; set; }
 
   public bool Eliminado { get; set; } = false;
+
   public virtual ICollection<Ventasitem> Ventasitems { get; set; } = new List<Ventasitem>();
 }
