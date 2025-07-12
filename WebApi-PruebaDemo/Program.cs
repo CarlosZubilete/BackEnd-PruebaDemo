@@ -16,6 +16,15 @@ builder.Services.AddDbContext<PruebademoContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringSQL"));
 });
 
+// Create a CORS policy to allow requests from the specified origin.
+builder.Services.AddCors(options => {
+  options.AddPolicy("NewPolicy", app =>
+  {
+    app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+  });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(); // Use the CORS Middlware.
 
 app.UseAuthorization();
 
