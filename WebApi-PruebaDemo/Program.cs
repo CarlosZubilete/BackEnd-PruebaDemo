@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(); // Use the CORS Middlware.
+app.UseCors("NewPolicy"); // Use the CORS Middlware.
 
 app.UseAuthorization();
 
