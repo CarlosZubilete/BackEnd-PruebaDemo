@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using FluentValidation;
 using WebApi_PruebaDemo.Models;
 using Microsoft.EntityFrameworkCore;
+using WebApi_PruebaDemo.Models.DTOs;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApi_PruebaDemo.Controllers
@@ -105,3 +106,5 @@ namespace WebApi_PruebaDemo.Controllers
     }
   }
 }
+
+//TODO: We need to a new GET method to get All products, including deleted products.
