@@ -2,6 +2,8 @@
 
 This is a simple REST API project using .NET 8, Entity Framework Core, and SQL Server.
 
+If you like to watch it : [Video]: https://www.linkedin.com/feed/update/urn:li:ugcPost:7351776326703316992/ "Post on LinkedIn"
+
 The solution is divided in two parts:
 
 - 🛠️ Backend: API built with ASP.NET Core.
